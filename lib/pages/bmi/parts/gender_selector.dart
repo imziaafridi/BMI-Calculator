@@ -12,15 +12,16 @@ class GenderSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: List.generate(
         gender.length,
         (int index) {
           String key = gender.keys.elementAt(index);
           String value = gender.values.elementAt(index);
 
-          // testing....
           return Container(
+            width: 150,
+            height: 150,
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
             decoration: BoxDecoration(
                 color: AppPaints.GREY_900,
