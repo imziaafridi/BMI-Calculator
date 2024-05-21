@@ -5,14 +5,17 @@ import 'package:google_fonts/google_fonts.dart';
 class CalculateButton extends StatelessWidget {
   const CalculateButton({
     super.key,
+    required this.onPressed,
+    this.text,
   });
+
+  final void Function()? onPressed;
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        debugPrint('Calculate Button !');
-      },
+      onTap: onPressed,
       child: Container(
         width: double.infinity,
         height: 60,
@@ -22,7 +25,7 @@ class CalculateButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(4),
         ),
         child: Text(
-          'CALCULATE',
+          text ?? 'CALCULATE',
           style: GoogleFonts.poppins(
             color: AppPaints.WHITE_70,
             fontSize: 20,

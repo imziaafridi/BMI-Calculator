@@ -1,12 +1,16 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:bmi_calculator/const/app_paints.dart';
+import 'package:bmi_calculator/settings/route/routes_name.dart';
 import 'package:bmi_calculator/utils/extensions.dart';
 import 'package:bmi_calculator/utils/widgets/app_title.dart';
+import 'package:bmi_calculator/utils/widgets/calculate_buttom.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'parts/gender_selector.dart';
+import 'parts/height_slider.dart';
+import 'parts/weight_and_age_selectors.dart';
 
 class BodyIndexMassHomeView extends StatefulWidget {
   const BodyIndexMassHomeView({super.key});
@@ -21,99 +25,45 @@ class _BodyIndexMassHomeViewState extends State<BodyIndexMassHomeView> {
     'assets/bmi-icons/male.png': 'MALE',
     'assets/bmi-icons/female.png': 'FEMALE',
   };
+  // final gender = [
+  //   'MALE',
+  //   'FEMALE',
+  // ];
 
   double slider = 0.0;
 
   @override
   Widget build(BuildContext context) {
-    final _mqSize = MediaQuery.of(context).size;
+    final mqSize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.black87,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           children: [
-            (_mqSize.height * 0.08).ph,
+            (mqSize.height * 0.08).ph,
             // app title
-            const AppTitle(),
-            (_mqSize.height * 0.03).ph,
-
+            const AppBarTitle(),
+            (mqSize.height * 0.03).ph,
             GenderSelector(gender: gender),
             20.ph,
-            Container(
-              decoration: BoxDecoration(
-                color: AppPaints.GREY_900,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                children: [
-                  6.ph,
-                  Text(
-                    'HEIGHT',
-                    style: GoogleFonts.roboto(
-                      color: AppPaints.WHITE_70,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  6.ph,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        '${slider.toInt()}',
-                        style: GoogleFonts.roboto(
-                          color: AppPaints.WHITE,
-                          fontSize: 22,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      1.pw,
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 3),
-                        child: Text(
-                          'cm',
-                          style: GoogleFonts.roboto(
-                            color: AppPaints.WHITE,
-                            // fontSize: ,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Slider(
-                    value: slider,
-                    label: '${slider.toInt()}',
-                    min: 0,
-                    max: 250,
-                    divisions: 250,
-                    activeColor: Colors.grey[600],
-                    thumbColor: Colors.brown,
-                    onChanged: (double val) {
-                      setState(
-                        () {
-                          slider = val;
-                        },
-                      );
-                      debugPrint('slider: $slider');
-                    },
-                  ),
-                ],
-              ),
+            (mqSize.height * 0.02).ph,
+            // slider for picking height for bmi
+            const HeightSlider(),
+            20.ph,
+            //create custom widgt fot  weight  and age for bmi clc
+            const WeightAndAgeSelectors(),
+            // create button for calculate bmi...
+            (mqSize.height * 0.05).ph,
+            CalculateButton(
+              onPressed: () {
+                debugPrint('Calculate Button !');
+                Navigator.pushNamed(
+                  context,
+                  RoutesName.BMI_RES,
+                );
+              },
             ),
-
-            // height
-            // (_mqSize.height * 0.02).ph,
-            // // slider for picking height for bmi
-            // const HeightSlider(),
-            // 20.ph,
-            // //create custom widgt fot  weight  and age for bmi clc
-            // const WeightAndAgeSelectors(),
-            // // create button for calculate bmi...
-            // (_mqSize.height * 0.05).ph,
-            // const CalculateButton(),
           ],
         ),
       ),

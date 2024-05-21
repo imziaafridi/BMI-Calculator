@@ -5,8 +5,8 @@ import 'package:bmi_calculator/utils/widgets/custom_heading_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CustomSelector extends StatelessWidget {
-  const CustomSelector({
+class CustomIncDecSelector extends StatelessWidget {
+  const CustomIncDecSelector({
     super.key,
     required this.title,
     required this.value,
