@@ -1,4 +1,4 @@
-import 'package:bmi_calculator/utils/custom_selector.dart';
+import 'package:bmi_calculator/utils/custom_inc_dec_selector.dart';
 import 'package:flutter/material.dart';
 
 class WeightAndAgeSelectors extends StatefulWidget {
@@ -23,7 +23,7 @@ class _WeightAndAgeSelectorsState extends State<WeightAndAgeSelectors> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        CustomSelector(
+        CustomIncDecSelector(
           title: 'WEIGHT',
           value: '$weightCounter',
           incOntap: () {
@@ -39,7 +39,7 @@ class _WeightAndAgeSelectorsState extends State<WeightAndAgeSelectors> {
             debugPrint('decrement: $weightCounter');
           },
         ),
-        CustomSelector(
+        CustomIncDecSelector(
           title: 'AGE',
           value: '$ageCounter',
           incOntap: () {

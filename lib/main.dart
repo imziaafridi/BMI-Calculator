@@ -1,3 +1,5 @@
+import 'package:bmi_calculator/settings/route/route_generates.dart';
+import 'package:bmi_calculator/settings/route/routes_name.dart';
 import 'package:flutter/material.dart';
 
 import 'pages/bmi/bmi_home_view.dart';
@@ -18,7 +20,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: BodyIndexMassHomeView(),
+      // home: const BodyIndexMassHomeView(),
+      initialRoute: RoutesName.BMI_CLC,
+      onGenerateRoute: RouteGenerates.generateRoutes,
     );
   }
 }
