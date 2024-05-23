@@ -21,11 +21,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<TempCubitBMI>(
-          create: (context) => TempCubitBMI(),
-        ),
         BlocProvider<BmiCalculationCubit>(
           create: (context) => BmiCalculationCubit(),
+        ),
+        BlocProvider<TempCubitBMI>(
+          create: (context) => TempCubitBMI(),
         ),
       ],
       child: MaterialApp(

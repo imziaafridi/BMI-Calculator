@@ -7,33 +7,27 @@ import '../../../cubit/inc-dec-cubit/bmi_inc_dec_cubit.dart';
 import '../../../cubit/inc-dec-cubit/bmi_inc_dec_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class GenderSelector extends StatefulWidget {
-  const GenderSelector({
+class GenderSelector extends StatelessWidget {
+  GenderSelector({
     super.key,
     required this.gender,
   });
 
   final Map<String, String> gender;
 
-  @override
-  State<GenderSelector> createState() => _GenderSelectorState();
-}
-
-class _GenderSelectorState extends State<GenderSelector> {
   String? selectedKey;
 
   @override
   Widget build(BuildContext context) {
     final appSize = AppSize(context);
-    final mqSize = MediaQuery.of(context).size;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: List.generate(
-        widget.gender.length,
+        gender.length,
         (int index) {
-          final key = widget.gender.keys.elementAt(index);
-          final value = widget.gender[key];
+          final key = gender.keys.elementAt(index);
+          final value = gender[key];
 
           return BlocBuilder<TempCubitBMI, TempStateBMI>(
             builder: (context, state) {
@@ -41,9 +35,7 @@ class _GenderSelectorState extends State<GenderSelector> {
               return GestureDetector(
                 onTap: () {
                   context.read<TempCubitBMI>().genderCubit(value);
-                  // setState(() {
-                  //   selectedKey = key;
-                  // });
+
                   debugPrint('genderCubit:  ${s.gender}');
                 },
                 child: Container(
