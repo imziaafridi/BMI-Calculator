@@ -22,6 +22,6 @@ Clean and intuitive interface for a smooth experience.
     <td>BMI-HOME_VIEW</td>
   </tr>
   <tr>
-    <td><img src="https://github.com/imziaurrehman/BMI-Calculator/blob/main/assets/bmi-hom.png" width=270 height=520></td>
+    <td><img src="https://github.com/imziaurrehman/BMI-Calculator/blob/main/assets/bmi-home.png" width=270 height=520></td>
   </tr>
 </table>
