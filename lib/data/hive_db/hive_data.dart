@@ -1,26 +1,34 @@
+import 'dart:io';
+
 import 'package:bmi_calculator/data/model/data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 
 abstract class BaseHiveData {
-  Future<void> initHiveDB();
+  // Future<void>  initHiveDB();
   Future<void> createDB(DataModel dataModel);
   Future<void> readDB();
   Future<void> deleteDB(int id);
 }
 
 class HiveData extends BaseHiveData {
-  static late HiveInterface hive;
-  final box = Hive.box('dataModels');
+  // static late HiveInterface hive;
+  static late Box<DataModel> box;
 
 // initialize db in main
-  @override
-  Future<void> initHiveDB() async {
+  static Future<void> initHiveDB() async {
     try {
       if (!Hive.isBoxOpen('dataModels')) {
-        Hive.initFlutter();
-        Hive.registerAdapter(DataModelAdapter());
-        Hive.openBox<DataModel>('dataModels');
+        Directory dir = await getApplicationDocumentsDirectory();
+        String path = dir.path;
+        Hive
+          ..init(path)
+          ..registerAdapter(
+            DataModelAdapter(),
+          );
+
+        box = await Hive.openBox<DataModel>('dataModels');
       }
     } catch (e) {
       debugPrint('$e');

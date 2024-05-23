@@ -20,13 +20,14 @@ class DataModelAdapter extends TypeAdapter<DataModel> {
       ..gender = fields[0] as String?
       ..sliderHt = fields[1] as double?
       ..weight = fields[2] as int?
-      ..age = fields[3] as int?;
+      ..age = fields[3] as int?
+      ..resultBMI = fields[4] as double?;
   }
 
   @override
   void write(BinaryWriter writer, DataModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.gender)
       ..writeByte(1)
@@ -34,7 +35,9 @@ class DataModelAdapter extends TypeAdapter<DataModel> {
       ..writeByte(2)
       ..write(obj.weight)
       ..writeByte(3)
-      ..write(obj.age);
+      ..write(obj.age)
+      ..writeByte(4)
+      ..write(obj.resultBMI);
   }
 
   @override

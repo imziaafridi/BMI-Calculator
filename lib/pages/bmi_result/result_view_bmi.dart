@@ -1,11 +1,10 @@
 import 'package:bmi_calculator/const/app_paints.dart';
 import 'package:bmi_calculator/utils/extensions.dart';
+import 'package:bmi_calculator/utils/functions/pie_indicator_list.dart';
 import 'package:bmi_calculator/utils/widgets/app_title.dart';
 import 'package:bmi_calculator/utils/widgets/body_text.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ResultViewBMI extends StatelessWidget {
   const ResultViewBMI({super.key});
@@ -38,9 +37,30 @@ class ResultViewBMI extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
           children: [
+            (mqSize.height * 0.05).ph,
             // graph repesentation for bmi
             PieChartBMI(mqSize: mqSize),
-            (mqSize.height * 0.04).ph,
+
+            (mqSize.height * 0.02).ph,
+
+            // pie chart colors indicators
+
+            ...List.generate(
+              colorsIndicatorsList.length,
+              (int index) {
+                return Column(
+                  children: [
+                    IndicatorsBMI(
+                        text: textIndicatorsList[index],
+                        colorC: colorsIndicatorsList[index],
+                        colorT: colorsIndicatorsList[index],
+                        mqSize: mqSize),
+                  ],
+                );
+              },
+            ),
+
+            (mqSize.height * 0.02).ph,
 
             // bmi result values
             DispResultCardBMI(
@@ -49,6 +69,48 @@ class ResultViewBMI extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class IndicatorsBMI extends StatelessWidget {
+  const IndicatorsBMI({
+    super.key,
+    this.mqSize,
+    required this.text,
+    this.colorC,
+    this.colorT,
+  });
+
+  final Size? mqSize;
+  final String text;
+  final Color? colorT;
+  final Color? colorC;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        // color indicator
+        Container(
+          width: 9,
+          height: 9,
+          decoration: BoxDecoration(
+            color: colorC ?? AppPaints.GREEN_900,
+            shape: BoxShape.circle,
+          ),
+        ),
+
+        (mqSize!.width * 0.02).pw,
+
+        // text for indiacator
+        BodyText(
+          text: text,
+          size: 14,
+          color: colorT ?? AppPaints.GREEN_900,
+        ),
+      ],
     );
   }
 }
@@ -69,82 +131,79 @@ class _PieChartBMIState extends State<PieChartBMI> {
   int touchedIndex = -1;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: widget.mqSize.width * 0.5,
-      height: widget.mqSize.height * 0.2,
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: AppPaints.GREY_900,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: PieChart(
-          PieChartData(
-            pieTouchData: PieTouchData(
-              touchCallback:
-                  (FlTouchEvent event, PieTouchResponse? pieTouchResponse) {
-                setState(() {
-                  if (!event.isInterestedForInteractions ||
-                      pieTouchResponse == null ||
-                      pieTouchResponse.touchedSection == null) {
-                    touchedIndex = -1;
-                    return;
-                  }
-                  touchedIndex =
-                      pieTouchResponse.touchedSection!.touchedSectionIndex;
-                });
-              },
-            ),
-            borderData: FlBorderData(show: false),
-            sectionsSpace: 0.0,
-            sections: showSections(),
+    return SizedBox(
+      width: widget.mqSize.width * 0.6,
+      height: widget.mqSize.height * 0.25,
+      child: PieChart(
+        PieChartData(
+          pieTouchData: PieTouchData(
+            touchCallback:
+                (FlTouchEvent event, PieTouchResponse? pieTouchResponse) {
+              setState(() {
+                if (!event.isInterestedForInteractions ||
+                    pieTouchResponse == null ||
+                    pieTouchResponse.touchedSection == null) {
+                  touchedIndex = -1;
+                  return;
+                }
+                touchedIndex =
+                    pieTouchResponse.touchedSection!.touchedSectionIndex;
+              });
+            },
           ),
+          borderData: FlBorderData(show: false),
+          sectionsSpace: 0.0,
+          sections:
+              showSections(), // pass bmi result value to args of showSections method
         ),
       ),
     );
   }
 
-  List<PieChartSectionData> showSections() {
-    return List.generate(4, (i) {
+  List<PieChartSectionData> showSections({double? bmiResVal}) {
+    return List.generate(5, (i) {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 25.0 : 16.0;
-      final radius = isTouched ? 60.0 : 50.0;
-      const shadows = [Shadow(color: Colors.black, blurRadius: 2)];
+      final fontSize = isTouched ? 20.0 : 16.0;
+      final radius = isTouched ? 90.0 : 70.0;
+
+      const shadows = [
+        Shadow(
+          color: AppPaints.GREY_400,
+          blurRadius: 2,
+        ),
+      ];
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: Colors.amber,
-            value: 40,
-            title: '40%',
+            color: AppPaints.GREEN_900,
+            value: bmiResVal ?? 18.4,
+            title: '18.4 + ',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: AppPaints.BLACK_900,
               shadows: shadows,
             ),
           );
         case 1:
           return PieChartSectionData(
-            color: Colors.cyan,
-            value: 30,
-            title: '30%',
+            color: Colors.amber[400],
+            value: 25,
+            title: '25 +',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: AppPaints.BLACK_900,
               shadows: shadows,
             ),
           );
         case 2:
           return PieChartSectionData(
-            color: Colors.indigo,
-            value: 15,
-            title: '15%',
+            color: AppPaints.RED_300,
+            value: 30,
+            title: '30 +',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -155,9 +214,9 @@ class _PieChartBMIState extends State<PieChartBMI> {
           );
         case 3:
           return PieChartSectionData(
-            color: Colors.green,
-            value: 15,
-            title: '15%',
+            color: AppPaints.RED_600,
+            value: 35,
+            title: '35+',
             radius: radius,
             titleStyle: TextStyle(
               fontSize: fontSize,
@@ -166,6 +225,20 @@ class _PieChartBMIState extends State<PieChartBMI> {
               shadows: shadows,
             ),
           );
+        case 4:
+          return PieChartSectionData(
+            color: AppPaints.YELLOW_400,
+            value: 17,
+            title: '- 17',
+            radius: radius,
+            titleStyle: TextStyle(
+              fontSize: fontSize,
+              fontWeight: FontWeight.bold,
+              color: AppPaints.BLACK_900,
+              shadows: shadows,
+            ),
+          );
+
         default:
           throw Error();
       }
@@ -288,7 +361,7 @@ class DispResultEntriesBMI extends StatelessWidget {
         ),
         BodyText(
           text: value,
-          color: colorV == null ? Colors.amber : AppPaints.WHITE_70,
+          color: colorV == null ? AppPaints.AMBER_900 : AppPaints.WHITE_70,
           fontWeight: fontWhtV,
           size: sizeV,
         ),

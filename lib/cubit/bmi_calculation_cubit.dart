@@ -10,7 +10,7 @@ class BmiCalculationCubit extends Cubit<BmiCalculationState> {
 
   final HiveData _hiveData = HiveData();
 
-  void createDBase(DataModel dataModel) async {
+  Future<void> createDBase(DataModel dataModel) async {
     try {
       _hiveData.createDB(dataModel);
       List<DataModel> r = await _hiveData.readDB();
