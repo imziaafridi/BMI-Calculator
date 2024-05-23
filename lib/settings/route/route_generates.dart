@@ -13,7 +13,9 @@ class RouteGenerates {
         );
       case RoutesName.BMI_RES:
         return MaterialPageRoute(
-          builder: (context) => const ResultViewBMI(),
+          builder: (context) => ResultViewBMI(
+            resBMI: ModalRoute.of(context)?.settings.arguments as double,
+          ),
         );
 
       default:
