@@ -6,7 +6,7 @@ Calculate your BMI based on height and weight.
 Understand your BMI category and its implications.
 Clean and intuitive interface for a smooth experience.
 
-## Great for:
+### Great for:
 . Fitness enthusiasts.
 
 . Health-conscious individuals.
@@ -15,6 +15,7 @@ Clean and intuitive interface for a smooth experience.
 
 
 
+### BMI DEMO  PICS:
 
 <table>
   <tr>
