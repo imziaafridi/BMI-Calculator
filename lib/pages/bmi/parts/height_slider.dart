@@ -6,17 +6,12 @@ import 'package:bmi_calculator/utils/widgets/custom_heading_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HeightSlider extends StatefulWidget {
+class HeightSlider extends StatelessWidget {
   const HeightSlider({
     super.key,
   });
 
-  @override
-  State<HeightSlider> createState() => _HeightSliderState();
-}
-
-class _HeightSliderState extends State<HeightSlider> {
-  double slider = 0.0;
+  // double slider = 0.0;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TempCubitBMI, TempStateBMI>(

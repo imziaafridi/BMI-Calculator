@@ -77,59 +77,52 @@ class CalculateButtonOPeration extends StatefulWidget {
 class _CalculateButtonOPerationState extends State<CalculateButtonOPeration> {
   @override
   Widget build(BuildContext context) {
-    return MultiBlocListener(
-      listeners: [
-        BlocListener<TempCubitBMI, TempStateBMI>(
-          listener: (context, state) {},
-        )
-      ],
-      child: CalculateButton(
-        onPressed: () async {
-          // access states frm cubits
-          final dbState = context.read<BmiCalculationCubit>();
-          final tempState = context.read<TempCubitBMI>().state;
-          debugPrint(
-            'Calculate Button !${tempState.ageCounter}',
+    return CalculateButton(
+      onPressed: () async {
+        // access states frm cubits
+        final dbState = context.read<BmiCalculationCubit>();
+        final tempState = context.read<TempCubitBMI>().state;
+        debugPrint(
+          'Calculate Button !${tempState.ageCounter}',
+        );
+
+        double? height = tempState.height;
+        int? weight = tempState.weightCounter;
+
+        // calculate BMI
+        // kg / m^2
+        // height to m^2
+        double mSquareHeight = (height! / 100) * (height / 100);
+        double resBMI = weight! / mSquareHeight;
+
+        // assign temp data to hive model
+        DataModel dataModel = DataModel()
+          ..gender = tempState.gender
+          ..sliderHt = tempState.height
+          ..weight = tempState.weightCounter
+          ..age = tempState.ageCounter
+          ..resultBMI = resBMI;
+
+        // here i will save bmi data...
+        await dbState.createDBase(dataModel);
+
+        // testing data
+        debugPrint('dataModel test: ${dataModel.runtimeType}');
+        debugPrint('dataModel: ${dataModel.gender}');
+        debugPrint('dataModel: ${dataModel.sliderHt}');
+        debugPrint('dataModel: ${dataModel.weight}');
+        debugPrint('dataModel: ${dataModel.age}');
+        debugPrint('dataModel: ${dataModel.resultBMI}');
+
+        if (!mounted) {
+          return;
+        } else {
+          Navigator.pushNamed(
+            context,
+            RoutesName.BMI_RES,
           );
-
-          double? height = tempState.height;
-          int? weight = tempState.weightCounter;
-
-          // calculate BMI
-          // kg / m^2
-          // height to m^2
-          double mSquareHeight = (height! / 100) * (height / 100);
-          double resBMI = weight! / mSquareHeight;
-
-          // assign temp data to hive model
-          DataModel dataModel = DataModel()
-            ..gender = tempState.gender
-            ..sliderHt = tempState.height
-            ..weight = tempState.weightCounter
-            ..age = tempState.ageCounter
-            ..resultBMI = resBMI;
-
-          // here i will save bmi data...
-          await dbState.createDBase(dataModel);
-
-          // testing data
-          debugPrint('dataModel test: ${dataModel.runtimeType}');
-          debugPrint('dataModel: ${dataModel.gender}');
-          debugPrint('dataModel: ${dataModel.sliderHt}');
-          debugPrint('dataModel: ${dataModel.weight}');
-          debugPrint('dataModel: ${dataModel.age}');
-          debugPrint('dataModel: ${dataModel.resultBMI}');
-
-          if (!mounted) {
-            return;
-          } else {
-            Navigator.pushNamed(
-              context,
-              RoutesName.BMI_RES,
-            );
-          }
-        },
-      ),
+        }
+      },
     );
   }
 }
