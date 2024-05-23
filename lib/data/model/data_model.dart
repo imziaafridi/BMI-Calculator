@@ -15,4 +15,9 @@ class DataModel {
 
   @HiveField(3)
   int? age;
+
+  @HiveField(4)
+  double? resultBMI;
 }
+
+// dart run build_runner build

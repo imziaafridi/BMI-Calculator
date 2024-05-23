@@ -9,7 +9,7 @@ class RouteGenerates {
     switch (rtSettings.name) {
       case RoutesName.BMI_CLC:
         return MaterialPageRoute(
-          builder: (context) => const BodyIndexMassHomeView(),
+          builder: (context) => BodyIndexMassHomeView(),
         );
       case RoutesName.BMI_RES:
         return MaterialPageRoute(

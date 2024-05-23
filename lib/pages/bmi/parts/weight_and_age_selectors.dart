@@ -1,5 +1,8 @@
+import 'package:bmi_calculator/cubit/inc-dec-cubit/bmi_inc_dec_cubit.dart';
+import 'package:bmi_calculator/cubit/inc-dec-cubit/bmi_inc_dec_state.dart';
 import 'package:bmi_calculator/utils/custom_inc_dec_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WeightAndAgeSelectors extends StatefulWidget {
   const WeightAndAgeSelectors({
@@ -23,36 +26,39 @@ class _WeightAndAgeSelectorsState extends State<WeightAndAgeSelectors> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        CustomIncDecSelector(
-          title: 'WEIGHT',
-          value: '$weightCounter',
-          incOntap: () {
-            setState(() {
-              weightCounter++;
-            });
-            debugPrint('increment: $weightCounter');
-          },
-          decOntap: () {
-            setState(() {
-              weightCounter--;
-            });
-            debugPrint('decrement: $weightCounter');
+        BlocBuilder<TempCubitBMI, TempStateBMI>(
+          builder: (context, state) {
+            return CustomIncDecSelector(
+              title: 'WEIGHT',
+              value: '${state.weightCounter}',
+              incOntap: () {
+                context.read<TempCubitBMI>().incrementWeightCubit();
+
+                debugPrint('incrementWeight: ${state.weightCounter}');
+              },
+              decOntap: () {
+                context.read<TempCubitBMI>().decrementWeightCubit();
+
+                debugPrint('decrementWeight: ${state.weightCounter}');
+              },
+            );
           },
         ),
-        CustomIncDecSelector(
-          title: 'AGE',
-          value: '$ageCounter',
-          incOntap: () {
-            setState(() {
-              ageCounter++;
-            });
-            debugPrint('increment: $ageCounter');
-          },
-          decOntap: () {
-            setState(() {
-              ageCounter--;
-            });
-            debugPrint('increment: $ageCounter');
+        BlocBuilder<TempCubitBMI, TempStateBMI>(
+          builder: (context, state) {
+            return CustomIncDecSelector(
+              title: 'AGE',
+              value: '${state.ageCounter}',
+              incOntap: () {
+                context.read<TempCubitBMI>().incrementAgeCubit();
+                debugPrint('incrementAge: $ageCounter');
+              },
+              decOntap: () {
+                context.read<TempCubitBMI>().decrementAgeCubit();
+
+                debugPrint('decrementAge: ${state.ageCounter}');
+              },
+            );
           },
         ),
       ],
