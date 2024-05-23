@@ -92,6 +92,7 @@ class _CalculateButtonOPerationState extends State<CalculateButtonOPeration> {
         // calculate BMI
         // kg / m^2
         // height to m^2
+
         double mSquareHeight = (height! / 100) * (height / 100);
         double resBMI = weight! / mSquareHeight;
 
@@ -104,7 +105,8 @@ class _CalculateButtonOPerationState extends State<CalculateButtonOPeration> {
           ..resultBMI = resBMI;
 
         // here i will save bmi data...
-        await dbState.createDBase(dataModel);
+
+        // await dbState.createDBase(dataModel);
 
         // testing data
         debugPrint('dataModel test: ${dataModel.runtimeType}');
@@ -120,6 +122,7 @@ class _CalculateButtonOPerationState extends State<CalculateButtonOPeration> {
           Navigator.pushNamed(
             context,
             RoutesName.BMI_RES,
+            arguments: resBMI,
           );
         }
       },

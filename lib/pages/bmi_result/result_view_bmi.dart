@@ -7,17 +7,19 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class ResultViewBMI extends StatelessWidget {
-  const ResultViewBMI({super.key});
+  ResultViewBMI({super.key, this.resBMI = 0.0});
 
+  double resBMI;
   @override
   Widget build(BuildContext context) {
     final mqSize = MediaQuery.of(context).size;
+    debugPrint("bmi res: $resBMI");
 
     return Scaffold(
       backgroundColor: Colors.black87,
       appBar: AppBar(
-        title: const AppBarTitle(
-          title: 'BMI RESULT',
+        title: AppBarTitle(
+          title: 'BMI RESULT = $resBMI',
         ),
         centerTitle: true,
         leading: IconButton(
@@ -44,7 +46,6 @@ class ResultViewBMI extends StatelessWidget {
             (mqSize.height * 0.02).ph,
 
             // pie chart colors indicators
-
             ...List.generate(
               colorsIndicatorsList.length,
               (int index) {
