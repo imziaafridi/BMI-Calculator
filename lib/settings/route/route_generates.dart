@@ -12,9 +12,11 @@ class RouteGenerates {
           builder: (context) => BodyIndexMassHomeView(),
         );
       case RoutesName.BMI_RES:
+        double resBMI = rtSettings.arguments as double;
         return MaterialPageRoute(
+          settings: RouteSettings(arguments: resBMI),
           builder: (context) => ResultViewBMI(
-            resBMI: ModalRoute.of(context)?.settings.arguments as double,
+            resBMI: resBMI,
           ),
         );
 

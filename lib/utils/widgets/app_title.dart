@@ -15,7 +15,7 @@ class AppBarTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title ?? 'BMI CALCULATOR',
-      style: GoogleFonts.poppins(
+      style: GoogleFonts.lato(
         color: AppPaints.WHITE,
         fontSize: fontSize ?? 30,
         fontWeight: FontWeight.w600,

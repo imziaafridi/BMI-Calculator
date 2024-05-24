@@ -13,7 +13,7 @@ class BodyText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: GoogleFonts.poppins(
+      style: GoogleFonts.lato(
         color: color ?? AppPaints.WHITE_70,
         fontSize: size ?? 20,
         fontWeight: fontWeight ?? FontWeight.w500,
