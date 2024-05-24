@@ -1,6 +1,5 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:bmi_calculator/const/app_paints.dart';
 import 'package:bmi_calculator/cubit/bmi_calculation_cubit.dart';
 import 'package:bmi_calculator/data/model/data_model.dart';
 import 'package:bmi_calculator/settings/route/routes_name.dart';
@@ -8,11 +7,9 @@ import 'package:bmi_calculator/utils/extensions.dart';
 import 'package:bmi_calculator/utils/widgets/app_title.dart';
 import 'package:bmi_calculator/utils/widgets/calculate_buttom.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../cubit/inc-dec-cubit/bmi_inc_dec_cubit.dart';
-import '../../cubit/inc-dec-cubit/bmi_inc_dec_state.dart';
 import 'parts/gender_selector.dart';
 import 'parts/height_slider.dart';
 import 'parts/weight_and_age_selectors.dart';
@@ -34,32 +31,34 @@ class BodyIndexMassHomeView extends StatelessWidget {
       backgroundColor: Colors.black87,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-        child: Column(
-          children: [
-            (mqSize.height * 0.08).ph,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              (mqSize.height * 0.056).ph,
 
-            // app title
-            const AppBarTitle(),
+              // app title
+              const AppBarTitle(),
 
-            (mqSize.height * 0.03).ph,
+              (mqSize.height * 0.03).ph,
 
-            GenderSelector(gender: gender),
+              GenderSelector(gender: gender),
 
-            (mqSize.height * 0.02).ph,
+              (mqSize.height * 0.02).ph,
 
-            // slider for picking height for bmi
-            const HeightSlider(),
+              // slider for picking height for bmi
+              const HeightSlider(),
 
-            (mqSize.height * 0.02).ph,
+              (mqSize.height * 0.02).ph,
 
-            //create custom widgt fot  weight  and age for bmi clc
-            const WeightAndAgeSelectors(),
+              //create custom widgt fot  weight  and age for bmi clc
+              const WeightAndAgeSelectors(),
 
-            (mqSize.height * 0.05).ph,
+              (mqSize.height * 0.05).ph,
 
-            // create button for calculate bmi...
-            const CalculateButtonOPeration(),
-          ],
+              // create button for calculate bmi...
+              const CalculateButtonOPeration(),
+            ],
+          ),
         ),
       ),
     );

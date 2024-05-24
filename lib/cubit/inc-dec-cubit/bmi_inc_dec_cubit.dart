@@ -52,5 +52,13 @@ class TempCubitBMI extends Cubit<TempStateBMI> {
       ),
     );
   }
+
+  // btm nav bar selected index method
+
+  void bNavSelectedIndex(int selectedIndex) {
+    emit(
+      state.copyWith(bNavSelectedIndex: selectedIndex),
+    );
+  }
 }//class end
 

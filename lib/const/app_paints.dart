@@ -13,4 +13,5 @@ class AppPaints {
   static const GREY_400 = Color.fromARGB(179, 0, 0, 0);
   static const BLACK_900 = Color.fromARGB(255, 0, 0, 0);
   static const AMBER_900 = const Color.fromARGB(255, 255, 193, 7);
+  static const RED_DARK = Color.fromARGB(196, 129, 27, 25);
 }
