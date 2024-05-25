@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:bmi_calculator/cubit/bmi_calculation_cubit.dart';
+import 'package:bmi_calculator/cubit/inc-dec-cubit/bmi_inc_dec_state.dart';
 import 'package:bmi_calculator/data/model/data_model.dart';
 import 'package:bmi_calculator/settings/route/routes_name.dart';
 import 'package:bmi_calculator/utils/extensions.dart';
@@ -65,15 +66,9 @@ class BodyIndexMassHomeView extends StatelessWidget {
   }
 }
 
-class CalculateButtonOPeration extends StatefulWidget {
+class CalculateButtonOPeration extends StatelessWidget {
   const CalculateButtonOPeration({super.key});
 
-  @override
-  State<CalculateButtonOPeration> createState() =>
-      _CalculateButtonOPerationState();
-}
-
-class _CalculateButtonOPerationState extends State<CalculateButtonOPeration> {
   @override
   Widget build(BuildContext context) {
     return CalculateButton(
@@ -81,49 +76,51 @@ class _CalculateButtonOPerationState extends State<CalculateButtonOPeration> {
         // access states frm cubits
         final dbState = context.read<BmiCalculationCubit>();
         final tempState = context.read<TempCubitBMI>().state;
-        debugPrint(
-          'Calculate Button !${tempState.ageCounter}',
-        );
 
-        double? height = tempState.height;
-        int? weight = tempState.weightCounter;
+        // Validate user input
+
+        double height =
+            tempState.height!; // Guaranteed non-null due to validation
+        int weight =
+            tempState.weightCounter!; // Guaranteed non-null due to validation
+        int age =
+            tempState.ageCounter!; // Guaranteed non-null due to validation
+        String gender =
+            tempState.gender!; // Guaranteed non-null due to validation
 
         // calculate BMI
         // kg / m^2
         // height to m^2
 
-        double mSquareHeight = (height! / 100) * (height / 100);
-        double resBMI = weight! / mSquareHeight;
+        double mSquareHeight = (height / 100) * (height / 100);
+        double resBMI = weight / mSquareHeight;
+        int dateTimeStamp = DateTime.now().microsecondsSinceEpoch;
 
         // assign temp data to hive model
+
         DataModel dataModel = DataModel()
           ..gender = tempState.gender
           ..sliderHt = tempState.height
           ..weight = tempState.weightCounter
           ..age = tempState.ageCounter
-          ..resultBMI = resBMI;
+          ..resultBMI = resBMI
+          ..dateTimeStamp = dateTimeStamp;
 
         // here i will save bmi data...
 
-        // await dbState.createDBase(dataModel);
+        await dbState.createDBase(dataModel);
 
         // testing data
         debugPrint('dataModel test: ${dataModel.runtimeType}');
-        debugPrint('dataModel: ${dataModel.gender}');
-        debugPrint('dataModel: ${dataModel.sliderHt}');
-        debugPrint('dataModel: ${dataModel.weight}');
-        debugPrint('dataModel: ${dataModel.age}');
-        debugPrint('dataModel: ${dataModel.resultBMI}');
+        debugPrint('gender: ${dataModel.gender}');
+        debugPrint('slider: ${dataModel.sliderHt}');
+        debugPrint('weight: ${dataModel.weight}');
+        debugPrint('age: ${dataModel.age}');
+        debugPrint('res: ${dataModel.resultBMI}');
+        debugPrint('dateTimeStamp: ${dataModel.dateTimeStamp}');
 
-        if (!mounted) {
-          return;
-        } else {
-          Navigator.pushNamed(
-            context,
-            RoutesName.BMI_RES,
-            arguments: resBMI,
-          );
-        }
+        // Navigate to BMI result screen
+        Navigator.pushNamed(context, RoutesName.BMI_RES, arguments: resBMI);
       },
     );
   }

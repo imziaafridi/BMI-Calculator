@@ -1,19 +1,26 @@
 part of 'bmi_calculation_cubit.dart';
 
-class BmiCalculationState {
-  BmiCalculationState({
+class BmiCalculationState extends Equatable {
+  const BmiCalculationState({
     this.dataModel,
   });
   final List<DataModel>? dataModel;
+
   BmiCalculationState copyWith(List<DataModel>? dataModel) {
     return BmiCalculationState(dataModel: dataModel ?? this.dataModel);
   }
+
+  @override
+  List<Object?> get props => [
+        dataModel,
+      ];
 }
 
 final class BmiCalculationInitial extends BmiCalculationState {
-  BmiCalculationInitial();
+  const BmiCalculationInitial();
 }
 
 final class BmiCalculationDone extends BmiCalculationState {
-  BmiCalculationDone({required super.dataModel});
+  const BmiCalculationDone({required List<DataModel> dataModel})
+      : super(dataModel: dataModel);
 }
