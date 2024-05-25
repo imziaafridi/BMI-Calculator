@@ -148,7 +148,8 @@ class _HistoryViewState extends State<HistoryView> {
     return Scaffold(
       appBar: AppBar(
         title: const AppBarTitle(
-          title: 'BMI History',
+          title: 'BMI HISTORY',
+          fontSize: 23.5,
         ),
         centerTitle: true,
         backgroundColor: AppPaints.GREY_400,
@@ -195,10 +196,15 @@ class _HistoryViewState extends State<HistoryView> {
                         expandedAlignment: Alignment.topLeft,
                         collapsedIconColor: AppPaints.WHITE_70,
                         // collapsedTextColor: AppPaints.BLACK_900,
-                        childrenPadding: const EdgeInsets.only(left: 15),
+                        childrenPadding:
+                            const EdgeInsets.only(left: 15, bottom: 4),
                         collapsedShape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(8),
                         ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+
                         collapsedBackgroundColor:
                             ResultEffectsBMI.getColorBMI(s.resultBMI!),
                         iconColor: AppPaints.WHITE_70,
@@ -240,6 +246,12 @@ class _HistoryViewState extends State<HistoryView> {
                                 DispResultEntriesBMI(
                                   title: 'Age',
                                   value: s.age.toString() ?? '20',
+                                  sizeT: 14,
+                                  sizeV: 14,
+                                ),
+                                DispResultEntriesBMI(
+                                  title: 'Date',
+                                  value: s.dateTimeStamp.toString() ?? '20',
                                   sizeT: 14,
                                   sizeV: 14,
                                 ),
