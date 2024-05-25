@@ -2,8 +2,8 @@ import 'package:bmi_calculator/const/app_paints.dart';
 import 'package:bmi_calculator/cubit/inc-dec-cubit/bmi_inc_dec_cubit.dart';
 import 'package:bmi_calculator/cubit/inc-dec-cubit/bmi_inc_dec_state.dart';
 import 'package:bmi_calculator/main.dart';
-import 'package:bmi_calculator/pages/bmi_result/parts/disp_result_card_bmi.dart';
-import 'package:bmi_calculator/pages/bmi_result/parts/indicators_bmi.dart';
+import 'package:bmi_calculator/pages/ResultBMI/parts/disp_result_card_bmi.dart';
+import 'package:bmi_calculator/pages/ResultBMI/parts/indicators_bmi.dart';
 import 'package:bmi_calculator/utils/extensions.dart';
 import 'package:bmi_calculator/utils/functions/bmi_result_effects.dart';
 import 'package:bmi_calculator/utils/functions/pie_indicator_list.dart';
@@ -73,7 +73,7 @@ class ResultViewBMI extends StatelessWidget {
                   left: 50,
                   right: 0,
                   top: 55,
-                  child: ExpansionTileText(
+                  child: TilesText(
                     value: resBMI.toStringAsFixed(1),
                     fColor: ResultEffectsBMI.getColorBMI(resBMI),
                     fontWeight: FontWeight.w600,
@@ -87,7 +87,7 @@ class ResultViewBMI extends StatelessWidget {
 
             // showing bmi res text/label
 
-            ExpansionTileText(
+            TilesText(
               value: ResultEffectsBMI.getLabeledBMI(resBMI),
               fColor: ResultEffectsBMI.getColorBMI(resBMI),
               fontWeight: FontWeight.w600,
