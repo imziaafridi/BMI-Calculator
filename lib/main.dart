@@ -188,7 +188,7 @@ class _HistoryViewState extends State<HistoryView> {
                   Expanded(
                     child: ListView.builder(
                       itemCount: state.dataModel!.length,
-                      reverse: true,
+                      // reverse: true,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         DataModel s = state.dataModel![index];
