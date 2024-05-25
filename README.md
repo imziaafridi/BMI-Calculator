@@ -57,3 +57,9 @@ Clean and intuitive interface for a smooth experience.
      <td><img src="https://github.com/imziaurrehman/BMI-Calculator/blob/main/assets/app-contents/bmi-hist-3-1.png" width=270 height=520></td>
   </tr>
 </table>
+
+### BMI DEMO  VDEO:
+
+https://github.com/imziaurrehman/BMI-Calculator/assets/67980329/605abc0e-1b2f-4c0a-b2db-f5a8469c2652
+
+
