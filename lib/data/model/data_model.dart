@@ -18,6 +18,9 @@ class DataModel {
 
   @HiveField(4)
   double? resultBMI;
+
+  @HiveField(5)
+  int? dateTimeStamp;
 }
 
 // dart run build_runner build

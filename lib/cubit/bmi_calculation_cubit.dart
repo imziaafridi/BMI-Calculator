@@ -1,39 +1,51 @@
 import 'package:bloc/bloc.dart';
 import 'package:bmi_calculator/data/hive_db/hive_data.dart';
 import 'package:bmi_calculator/data/model/data_model.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 part 'bmi_calculation_state.dart';
 
 class BmiCalculationCubit extends Cubit<BmiCalculationState> {
-  BmiCalculationCubit() : super(BmiCalculationInitial());
+  BmiCalculationCubit() : super(const BmiCalculationInitial());
 
   final HiveData _hiveData = HiveData();
 
   Future<void> createDBase(DataModel dataModel) async {
     try {
-      _hiveData.createDB(dataModel);
+      await _hiveData.createDB(dataModel);
       List<DataModel> r = await _hiveData.readDB();
-      emit(state.copyWith(r));
+      emit(
+        BmiCalculationDone(dataModel: r),
+      );
     } on Exception catch (e) {
       debugPrint('$e');
     }
   } //cdb
 
-  void readDBase(DataModel dataModel) async {
+  void readDBase() async {
     try {
       List<DataModel> r = await _hiveData.readDB();
-      emit(state.copyWith(r));
+      emit(
+        BmiCalculationDone(dataModel: r),
+      );
     } on Exception catch (e) {
       debugPrint('$e');
     }
   }
 
-  void deleteDBase(id) async {
+  void deleteDBase(int id) async {
     try {
-      await _hiveData.deleteDB(id);
+      int index =
+          state.dataModel!.indexWhere((item) => item.dateTimeStamp == id);
+
+      if (index != -1) {
+        await _hiveData.deleteDB(index);
+      }
       List<DataModel> r = await _hiveData.readDB();
-      emit(state.copyWith(r));
+      emit(
+        BmiCalculationDone(dataModel: r),
+      );
     } on Exception catch (e) {
       debugPrint('$e');
     }

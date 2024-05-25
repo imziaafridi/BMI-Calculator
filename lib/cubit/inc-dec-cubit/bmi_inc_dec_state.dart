@@ -5,7 +5,7 @@ class TempStateBMI extends Equatable {
     this.weightCounter = 65,
     this.ageCounter = 10,
     this.gender,
-    this.height = 0.0,
+    this.height = 160,
     this.bNavSelectedIndex = 0,
   });
   int? weightCounter;

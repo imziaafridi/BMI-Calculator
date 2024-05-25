@@ -4,7 +4,7 @@ import 'bmi_inc_dec_state.dart';
 
 class TempCubitBMI extends Cubit<TempStateBMI> {
   TempCubitBMI()
-      : super(TempStateBMI(weightCounter: 60, ageCounter: 10, height: 0.0));
+      : super(TempStateBMI(weightCounter: 60, ageCounter: 20, height: 160));
 
 //  increments and decrements operations
 
