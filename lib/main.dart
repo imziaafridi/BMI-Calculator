@@ -2,14 +2,18 @@ import 'package:bmi_calculator/const/app_paints.dart';
 import 'package:bmi_calculator/cubit/inc-dec-cubit/bmi_inc_dec_state.dart';
 import 'package:bmi_calculator/data/hive_db/hive_data.dart';
 import 'package:bmi_calculator/data/model/data_model.dart';
+import 'package:bmi_calculator/pages/bmi_result/parts/custom_divider.dart';
 import 'package:bmi_calculator/pages/bmi_result/parts/disp_result_entries_bmi.dart';
 import 'package:bmi_calculator/settings/route/route_generates.dart';
+import 'package:bmi_calculator/utils/extensions.dart';
 import 'package:bmi_calculator/utils/functions/bmi_result_effects.dart';
+import 'package:bmi_calculator/utils/functions/date_time_formater.dart';
 import 'package:bmi_calculator/utils/widgets/app_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'cubit/bmi_calculation_cubit.dart';
 import 'cubit/inc-dec-cubit/bmi_inc_dec_cubit.dart';
@@ -18,6 +22,7 @@ import 'pages/bmi/bmi_home_view.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HiveData.initHiveDB();
+  await initializeDateFormatting('ur_PK');
   runApp(const MyApp());
 }
 
@@ -163,109 +168,148 @@ class _HistoryViewState extends State<HistoryView> {
           } else if (state.dataModel!.isNotEmpty) {
             return Padding(
               padding: const EdgeInsets.only(
-                  left: 20, right: 20, top: 50, bottom: 10),
-              child: ListView.builder(
-                itemCount: state.dataModel!.length,
-                reverse: true,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  DataModel s = state.dataModel![index];
-                  String stamp = s.dateTimeStamp.toString().substring(12, 15);
+                  left: 20, right: 20, top: 10, bottom: 10),
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: AppPaints.GREY_900,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: const ExpansionTileText(
+                      value:
+                          'Users can see how their weight and BMI have changed over time.',
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  30.ph,
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: state.dataModel!.length,
+                      reverse: true,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        DataModel s = state.dataModel![index];
 
-                  return Container(
-                    margin: const EdgeInsets.symmetric(vertical: 10),
-                    decoration: const BoxDecoration(
-                        // borderRadius: BorderRadius.circular(12),
-                        ),
-                    child: Dismissible(
-                      key: Key(
-                        s.dateTimeStamp!.toString(),
-                      ),
-                      direction: DismissDirection.down,
-                      background: const Icon(
-                        CupertinoIcons.delete,
-                        color: AppPaints.RED_DARK,
-                      ),
-                      onDismissed: (direction) {
-                        context.read<BmiCalculationCubit>().deleteDBase(
-                              s.dateTimeStamp!,
-                            );
-                        debugPrint('stamp: ${int.parse(stamp).toString()}');
-                      },
-                      child: ExpansionTile(
-                        expandedAlignment: Alignment.topLeft,
-                        collapsedIconColor: AppPaints.WHITE_70,
-                        // collapsedTextColor: AppPaints.BLACK_900,
-                        childrenPadding:
-                            const EdgeInsets.only(left: 15, bottom: 4),
-                        collapsedShape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                        return Dismissible(
+                          key: Key(
+                            s.dateTimeStamp!.toString(),
+                          ),
+                          direction: DismissDirection.horizontal,
+                          secondaryBackground: Container(),
+                          background: const Icon(
+                            CupertinoIcons.delete,
+                            color: AppPaints.RED_300,
+                          ),
+                          onDismissed: (direction) {
+                            context.read<BmiCalculationCubit>().deleteDBase(
+                                  s.dateTimeStamp!,
+                                );
 
-                        collapsedBackgroundColor:
-                            ResultEffectsBMI.getColorBMI(s.resultBMI!),
-                        iconColor: AppPaints.WHITE_70,
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: ExpansionTileText(
+                                  value:
+                                      "BMI ${s.resultBMI!.toStringAsFixed(1)} is deleted successfully",
+                                ),
+                              ),
+                            ));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: ExpansionTile(
+                              expandedAlignment: Alignment.topLeft,
+                              collapsedIconColor: AppPaints.WHITE_70,
+                              // collapsedTextColor: AppPaints.BLACK_900,
+                              childrenPadding:
+                                  const EdgeInsets.only(left: 15, bottom: 4),
+                              collapsedShape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
 
-                        backgroundColor: AppPaints.GREY_900,
-                        // expansionAnimationStyle: AnimationStyle(),
-                        // clipBehavior: Clip.hardEdge,
-                        title: DispResultEntriesBMI(
-                          title: "BMI ${s.resultBMI!.toStringAsFixed(1)} ",
-                          value: ResultEffectsBMI.getLabeledBMI(s.resultBMI!),
-                          sizeT: 17,
-                          sizeV: 1,
-                        ),
-                        // expanded views
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 10, bottom: 4),
-                            child: Column(
+                              collapsedBackgroundColor:
+                                  ResultEffectsBMI.getColorBMI(s.resultBMI!),
+                              iconColor: AppPaints.WHITE_70,
+
+                              backgroundColor: AppPaints.GREY_900,
+                              // expansionAnimationStyle: AnimationStyle(),
+                              // clipBehavior: Clip.hardEdge,
+                              title: DispResultEntriesBMI(
+                                title: "BMI RESULT",
+                                value: s.resultBMI!.toStringAsFixed(1),
+                                sizeT: 16,
+                                sizeV: 16,
+                                colorV: AppPaints.WHITE_70,
+                              ),
+                              // expanded views
                               children: [
-                                DispResultEntriesBMI(
-                                  title: 'Gender',
-                                  value: s.gender ?? 'F',
-                                  sizeT: 14,
-                                  sizeV: 14,
-                                ),
-                                DispResultEntriesBMI(
-                                  title: 'Weight',
-                                  value: s.weight.toString() ?? '70',
-                                  sizeT: 14,
-                                  sizeV: 14,
-                                ),
-                                DispResultEntriesBMI(
-                                  title: 'Height',
-                                  value: s.sliderHt.toString() ?? '150',
-                                  sizeT: 14,
-                                  sizeV: 14,
-                                ),
-                                DispResultEntriesBMI(
-                                  title: 'Age',
-                                  value: s.age.toString() ?? '20',
-                                  sizeT: 14,
-                                  sizeV: 14,
-                                ),
-                                DispResultEntriesBMI(
-                                  title: 'Date',
-                                  value: s.dateTimeStamp.toString() ?? '20',
-                                  sizeT: 14,
-                                  sizeV: 14,
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 10, bottom: 4),
+                                  child: Column(
+                                    children: [
+                                      ExpansionTileText(
+                                        value: ResultEffectsBMI.getLabeledBMI(
+                                          s.resultBMI!,
+                                        ),
+                                        size: 14,
+                                        fColor: ResultEffectsBMI.getColorBMI(
+                                          s.resultBMI!,
+                                        ),
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      const CustomDivider(),
+                                      DispResultEntriesBMI(
+                                        title: 'Gender :',
+                                        value: s.gender ?? 'F',
+                                        sizeT: 14,
+                                        sizeV: 14,
+                                      ),
+                                      DispResultEntriesBMI(
+                                        title: 'Weight :',
+                                        value: s.weight.toString() ?? '70',
+                                        sizeT: 14,
+                                        sizeV: 14,
+                                      ),
+                                      DispResultEntriesBMI(
+                                        title: 'Height :',
+                                        value: s.sliderHt.toString() ?? '150',
+                                        sizeT: 14,
+                                        sizeV: 14,
+                                      ),
+                                      DispResultEntriesBMI(
+                                        title: 'Age :',
+                                        value: s.age.toString() ?? '20',
+                                        sizeT: 14,
+                                        sizeV: 14,
+                                      ),
+                                      DispResultEntriesBMI(
+                                        title: 'DateTime :',
+                                        value: DateTimeFormater.toDateTime(
+                                                    s.dateTimeStamp!)
+                                                .toString() ??
+                                            '20',
+                                        sizeT: 14,
+                                        sizeV: 14,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-
-                          // ExpansionTileText(value: s.gender ?? 'F'),
-                          // ExpansionTileText(value: s.gender ?? 'F'),
-                        ],
-                      ),
+                        );
+                      },
                     ),
-                  );
-                },
+                  ),
+                ],
               ),
             );
           } else {
