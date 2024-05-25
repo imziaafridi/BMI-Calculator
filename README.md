@@ -21,9 +21,24 @@ Clean and intuitive interface for a smooth experience.
   <tr>
     <td>BMI-HOME_VIEW</td>
     <td>BMI-RESULT_VIEW</td>
+        <td>BMI-HISTORY_VIEW-I</td>
+
   </tr>
   <tr>
     <td><img src="https://github.com/imziaurrehman/BMI-Calculator/blob/main/assets/bmi-h.png" width=270 height=520></td>
      <td><img src="https://github.com/imziaurrehman/BMI-Calculator/blob/main/assets/res-bmi.png" width=270 height=520></td>
+         <td><img src="https://github.com/imziaurrehman/BMI-Calculator/blob/main/assets/app-contents/bmi-hist-1-2.png" width=270 height=520></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <td>BMI-HOME_VIEW-II</td>
+    <td>BMI-RESULT_VIEW-III</td>
+    
+  </tr>
+  <tr>
+    <td><img src="https://github.com/imziaurrehman/BMI-Calculator/blob/main/assets/app-contents/bmi-hist-2-2.png" width=270 height=520></td>
+     <td><img src="https://github.com/imziaurrehman/BMI-Calculator/blob/main/assets/app-contents/bmi-hist-3-1.png" width=270 height=520></td>
   </tr>
 </table>
