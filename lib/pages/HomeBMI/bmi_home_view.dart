@@ -1,7 +1,5 @@
-// ignore_for_file: must_be_immutable
-
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
 import 'package:bmi_calculator/cubit/bmi_calculation_cubit.dart';
-import 'package:bmi_calculator/cubit/inc-dec-cubit/bmi_inc_dec_state.dart';
 import 'package:bmi_calculator/data/model/data_model.dart';
 import 'package:bmi_calculator/settings/route/routes_name.dart';
 import 'package:bmi_calculator/utils/extensions.dart';
@@ -9,8 +7,7 @@ import 'package:bmi_calculator/utils/widgets/app_title.dart';
 import 'package:bmi_calculator/utils/widgets/calculate_buttom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../cubit/inc-dec-cubit/bmi_inc_dec_cubit.dart';
+import '../../cubit/inc-dec-cubit/temp_cubit_bmi.dart';
 import 'parts/gender_selector.dart';
 import 'parts/height_slider.dart';
 import 'parts/weight_and_age_selectors.dart';
@@ -77,27 +74,18 @@ class CalculateButtonOPeration extends StatelessWidget {
         final dbState = context.read<BmiCalculationCubit>();
         final tempState = context.read<TempCubitBMI>().state;
 
-        // Validate user input
-
-        double height =
-            tempState.height!; // Guaranteed non-null due to validation
-        int weight =
-            tempState.weightCounter!; // Guaranteed non-null due to validation
-        int age =
-            tempState.ageCounter!; // Guaranteed non-null due to validation
-        String gender =
-            tempState.gender!; // Guaranteed non-null due to validation
+        // variables
+        double height = tempState.height!;
+        int weight = tempState.weightCounter!;
 
         // calculate BMI
         // kg / m^2
         // height to m^2
-
         double mSquareHeight = (height / 100) * (height / 100);
         double resBMI = weight / mSquareHeight;
         int dateTimeStamp = DateTime.now().microsecondsSinceEpoch;
 
         // assign temp data to hive model
-
         DataModel dataModel = DataModel()
           ..gender = tempState.gender
           ..sliderHt = tempState.height
@@ -107,8 +95,10 @@ class CalculateButtonOPeration extends StatelessWidget {
           ..dateTimeStamp = dateTimeStamp;
 
         // here i will save bmi data...
-
         await dbState.createDBase(dataModel);
+
+        // Navigate to BMI result screen
+        Navigator.pushNamed(context, RoutesName.BMI_RES, arguments: resBMI);
 
         // testing data
         debugPrint('dataModel test: ${dataModel.runtimeType}');
@@ -118,9 +108,6 @@ class CalculateButtonOPeration extends StatelessWidget {
         debugPrint('age: ${dataModel.age}');
         debugPrint('res: ${dataModel.resultBMI}');
         debugPrint('dateTimeStamp: ${dataModel.dateTimeStamp}');
-
-        // Navigate to BMI result screen
-        Navigator.pushNamed(context, RoutesName.BMI_RES, arguments: resBMI);
       },
     );
   }

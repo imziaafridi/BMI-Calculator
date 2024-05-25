@@ -1,7 +1,7 @@
 import 'package:bmi_calculator/const/app_paints.dart';
 import 'package:bmi_calculator/cubit/inc-dec-cubit/bmi_inc_dec_cubit.dart';
 import 'package:bmi_calculator/cubit/inc-dec-cubit/bmi_inc_dec_state.dart';
-import 'package:bmi_calculator/main.dart';
+import 'package:bmi_calculator/settings/pages.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

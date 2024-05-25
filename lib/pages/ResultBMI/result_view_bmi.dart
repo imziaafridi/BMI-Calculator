@@ -1,15 +1,9 @@
 import 'package:bmi_calculator/const/app_paints.dart';
-import 'package:bmi_calculator/cubit/inc-dec-cubit/bmi_inc_dec_cubit.dart';
-import 'package:bmi_calculator/cubit/inc-dec-cubit/bmi_inc_dec_state.dart';
-import 'package:bmi_calculator/main.dart';
 import 'package:bmi_calculator/pages/ResultBMI/parts/disp_result_card_bmi.dart';
-import 'package:bmi_calculator/pages/ResultBMI/parts/indicators_bmi.dart';
 import 'package:bmi_calculator/utils/extensions.dart';
 import 'package:bmi_calculator/utils/functions/bmi_result_effects.dart';
-import 'package:bmi_calculator/utils/functions/pie_indicator_list.dart';
 import 'package:bmi_calculator/utils/widgets/app_title.dart';
-import 'package:bmi_calculator/utils/widgets/body_text.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:bmi_calculator/utils/widgets/tiles_text.dart';
 import 'package:flutter/material.dart';
 
 class ResultViewBMI extends StatelessWidget {
