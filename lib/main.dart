@@ -18,6 +18,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'cubit/bmi_calculation_cubit.dart';
 import 'cubit/inc-dec-cubit/bmi_inc_dec_cubit.dart';
 import 'pages/bmi/bmi_home_view.dart';
+import 'utils/widgets/b_nav_bar.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,74 +57,9 @@ class MyApp extends StatelessWidget {
                 ),
               )),
         ),
-        home: const BNav(),
+        home: BNav(),
         // initialRoute: RoutesName.BMI_CLC,
         onGenerateRoute: RouteGenerates.generateRoutes,
-      ),
-    );
-  }
-}
-
-class BNav extends StatefulWidget {
-  const BNav({super.key});
-
-  @override
-  State<BNav> createState() => _BNavState();
-}
-
-class _BNavState extends State<BNav> {
-  int isSelected = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppPaints.GREY_400,
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-        decoration: const BoxDecoration(
-            // borderRadius: BorderRadius.circular(12),
-            ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: BlocBuilder<TempCubitBMI, TempStateBMI>(
-            // bloc: TempCubitBMI(),
-            builder: (context, state) {
-              return NavigationBar(
-                labelBehavior:
-                    NavigationDestinationLabelBehavior.onlyShowSelected,
-                shadowColor: AppPaints.YELLOW_400,
-                surfaceTintColor: Colors.indigo,
-                elevation: 2,
-                overlayColor: const WidgetStatePropertyAll(
-                  Color.fromARGB(196, 129, 27, 25),
-                ),
-                backgroundColor: AppPaints.GREY_900,
-                indicatorColor: const Color.fromARGB(255, 129, 27, 25),
-                selectedIndex: state.bNavSelectedIndex ?? 0,
-                onDestinationSelected: (value) {
-                  context.read<TempCubitBMI>().bNavSelectedIndex(value);
-                  // setState(() {
-                  //   isSelected = value;
-                  // });
-                },
-                destinations: const [
-                  NavigationDestination(
-                    icon: Icon(
-                      CupertinoIcons.home,
-                    ),
-                    label: 'BMI Home',
-                  ),
-                  NavigationDestination(
-                      icon: Icon(Icons.history), label: 'BMI Recent'),
-                ],
-              );
-            },
-          ),
-        ),
-      ),
-      body: BlocBuilder<TempCubitBMI, TempStateBMI>(
-        builder: (context, state) {
-          return pages[state.bNavSelectedIndex!];
-        },
       ),
     );
   }
