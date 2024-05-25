@@ -1,7 +1,5 @@
 import 'package:bmi_calculator/const/app_paints.dart';
-import 'package:bmi_calculator/utils/extensions.dart';
-import 'package:bmi_calculator/utils/widgets/circular_custom_button.dart';
-import 'package:bmi_calculator/utils/widgets/custom_heading_text.dart';
+import 'package:bmi_calculator/utils/utils_exports.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 

@@ -1,10 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:bmi_calculator/data/hive_db/hive_data.dart';
-import 'package:bmi_calculator/data/model/data_model.dart';
-import 'package:equatable/equatable.dart';
+import 'package:bmi_calculator/cubit/cubit_exports.dart';
+import 'package:bmi_calculator/data/data_exports.dart';
 import 'package:flutter/material.dart';
-
-part 'bmi_calculation_state.dart';
 
 class BmiCalculationCubit extends Cubit<BmiCalculationState> {
   BmiCalculationCubit() : super(const BmiCalculationInitial());

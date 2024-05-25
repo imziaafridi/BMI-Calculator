@@ -1,10 +1,7 @@
 import 'package:bmi_calculator/const/app_paints.dart';
-import 'package:bmi_calculator/data/model/data_model.dart';
-import 'package:bmi_calculator/pages/ResultBMI/parts/custom_divider.dart';
-import 'package:bmi_calculator/pages/ResultBMI/parts/disp_result_entries_bmi.dart';
-import 'package:bmi_calculator/utils/functions/bmi_result_effects.dart';
-import 'package:bmi_calculator/utils/functions/date_time_formater.dart';
-import 'package:bmi_calculator/utils/widgets/tiles_text.dart';
+import 'package:bmi_calculator/data/data_exports.dart';
+import 'package:bmi_calculator/pages/pages_exports.dart';
+import 'package:bmi_calculator/utils/utils_exports.dart';
 import 'package:flutter/material.dart';
 
 class ExpansionTilesBodyHistoyViewBMI extends StatelessWidget {

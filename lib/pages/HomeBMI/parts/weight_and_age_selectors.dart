@@ -1,6 +1,5 @@
-import 'package:bmi_calculator/cubit/inc-dec-cubit/bmi_inc_dec_cubit.dart';
-import 'package:bmi_calculator/cubit/inc-dec-cubit/bmi_inc_dec_state.dart';
-import 'package:bmi_calculator/utils/custom_inc_dec_selector.dart';
+import 'package:bmi_calculator/cubit/cubit_exports.dart';
+import 'package:bmi_calculator/utils/utils_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

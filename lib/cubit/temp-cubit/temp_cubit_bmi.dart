@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
-
-import 'bmi_inc_dec_state.dart';
+import 'temp_state_bmi.dart';
 
 class TempCubitBMI extends Cubit<TempStateBMI> {
   TempCubitBMI()

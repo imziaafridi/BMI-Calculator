@@ -1,12 +1,11 @@
-import 'package:bmi_calculator/data/hive_db/hive_data.dart';
+import 'package:bmi_calculator/cubit/cubit_exports.dart';
+import 'package:bmi_calculator/data/data_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'cubit/bmi_calculation_cubit.dart';
-import 'cubit/inc-dec-cubit/bmi_inc_dec_cubit.dart';
 import 'settings/route/route_generates.dart';
-import 'utils/widgets/b_nav_bar.dart';
+import 'utils/utils_exports.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

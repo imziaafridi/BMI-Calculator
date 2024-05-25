@@ -1,8 +1,8 @@
 import 'package:bmi_calculator/const/app_paints.dart';
-import 'package:bmi_calculator/cubit/bmi_calculation_cubit.dart';
-import 'package:bmi_calculator/data/model/data_model.dart';
-import 'package:bmi_calculator/pages/HistoryBMI/parts/expansion_tiles_body_view_bmi.dart';
-import 'package:bmi_calculator/utils/widgets/tiles_text.dart';
+import 'package:bmi_calculator/cubit/cubit_exports.dart';
+import 'package:bmi_calculator/data/data_exports.dart';
+import 'package:bmi_calculator/pages/pages_exports.dart';
+import 'package:bmi_calculator/utils/utils_exports.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
