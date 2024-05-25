@@ -2,8 +2,8 @@ import 'package:bmi_calculator/const/app_paints.dart';
 import 'package:bmi_calculator/cubit/inc-dec-cubit/bmi_inc_dec_state.dart';
 import 'package:bmi_calculator/data/hive_db/hive_data.dart';
 import 'package:bmi_calculator/data/model/data_model.dart';
-import 'package:bmi_calculator/pages/bmi_result/parts/custom_divider.dart';
-import 'package:bmi_calculator/pages/bmi_result/parts/disp_result_entries_bmi.dart';
+import 'package:bmi_calculator/pages/ResultBMI/parts/custom_divider.dart';
+import 'package:bmi_calculator/pages/ResultBMI/parts/disp_result_entries_bmi.dart';
 import 'package:bmi_calculator/settings/route/route_generates.dart';
 import 'package:bmi_calculator/utils/extensions.dart';
 import 'package:bmi_calculator/utils/functions/bmi_result_effects.dart';
@@ -17,8 +17,9 @@ import 'package:intl/date_symbol_data_local.dart';
 
 import 'cubit/bmi_calculation_cubit.dart';
 import 'cubit/inc-dec-cubit/bmi_inc_dec_cubit.dart';
-import 'pages/bmi/bmi_home_view.dart';
+import 'pages/HomeBMI/bmi_home_view.dart';
 import 'utils/widgets/b_nav_bar.dart';
+import 'utils/widgets/tiles_text.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -107,19 +108,7 @@ class _HistoryViewState extends State<HistoryView> {
                   left: 20, right: 20, top: 10, bottom: 10),
               child: Column(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: AppPaints.GREY_900,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: const ExpansionTileText(
-                      value:
-                          'Users can see how their weight and BMI have changed over time.',
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  const HeaderHistoryBMI(),
                   30.ph,
                   Expanded(
                     child: ListView.builder(
@@ -128,120 +117,7 @@ class _HistoryViewState extends State<HistoryView> {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         DataModel s = state.dataModel![index];
-
-                        return Dismissible(
-                          key: Key(
-                            s.dateTimeStamp!.toString(),
-                          ),
-                          direction: DismissDirection.horizontal,
-                          secondaryBackground: Container(),
-                          background: const Icon(
-                            CupertinoIcons.delete,
-                            color: AppPaints.RED_300,
-                          ),
-                          onDismissed: (direction) {
-                            context.read<BmiCalculationCubit>().deleteDBase(
-                                  s.dateTimeStamp!,
-                                );
-
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: ExpansionTileText(
-                                  value:
-                                      "BMI ${s.resultBMI!.toStringAsFixed(1)} is deleted successfully",
-                                ),
-                              ),
-                            ));
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 6),
-                            child: ExpansionTile(
-                              expandedAlignment: Alignment.topLeft,
-                              collapsedIconColor: AppPaints.WHITE_70,
-                              // collapsedTextColor: AppPaints.BLACK_900,
-                              childrenPadding:
-                                  const EdgeInsets.only(left: 15, bottom: 4),
-                              collapsedShape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-
-                              collapsedBackgroundColor:
-                                  ResultEffectsBMI.getColorBMI(s.resultBMI!),
-                              iconColor: AppPaints.WHITE_70,
-
-                              backgroundColor: AppPaints.GREY_900,
-                              // expansionAnimationStyle: AnimationStyle(),
-                              // clipBehavior: Clip.hardEdge,
-                              title: DispResultEntriesBMI(
-                                title: "BMI RESULT",
-                                value: s.resultBMI!.toStringAsFixed(1),
-                                sizeT: 16,
-                                sizeV: 16,
-                                colorV: AppPaints.WHITE_70,
-                              ),
-                              // expanded views
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 10, bottom: 4),
-                                  child: Column(
-                                    children: [
-                                      ExpansionTileText(
-                                        value: ResultEffectsBMI.getLabeledBMI(
-                                          s.resultBMI!,
-                                        ),
-                                        size: 14,
-                                        fColor: ResultEffectsBMI.getColorBMI(
-                                          s.resultBMI!,
-                                        ),
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      const CustomDivider(),
-                                      DispResultEntriesBMI(
-                                        title: 'Gender :',
-                                        value: s.gender ?? 'F',
-                                        sizeT: 14,
-                                        sizeV: 14,
-                                      ),
-                                      DispResultEntriesBMI(
-                                        title: 'Weight :',
-                                        value: s.weight.toString() ?? '70',
-                                        sizeT: 14,
-                                        sizeV: 14,
-                                      ),
-                                      DispResultEntriesBMI(
-                                        title: 'Height :',
-                                        value: s.sliderHt.toString() ?? '150',
-                                        sizeT: 14,
-                                        sizeV: 14,
-                                      ),
-                                      DispResultEntriesBMI(
-                                        title: 'Age :',
-                                        value: s.age.toString() ?? '20',
-                                        sizeT: 14,
-                                        sizeV: 14,
-                                      ),
-                                      DispResultEntriesBMI(
-                                        title: 'DateTime :',
-                                        value: DateTimeFormater.toDateTime(
-                                                    s.dateTimeStamp!)
-                                                .toString() ??
-                                            '20',
-                                        sizeT: 14,
-                                        sizeV: 14,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
+                        return DismissibleOnBodyHistoryViewBMI(s: s);
                       },
                     ),
                   ),
@@ -259,27 +135,154 @@ class _HistoryViewState extends State<HistoryView> {
   }
 }
 
-class ExpansionTileText extends StatelessWidget {
-  const ExpansionTileText({
+class DismissibleOnBodyHistoryViewBMI extends StatelessWidget {
+  const DismissibleOnBodyHistoryViewBMI({
     super.key,
-    required this.value,
-    this.fontWeight,
-    this.size,
-    this.fColor,
+    required this.s,
   });
-  final String value;
-  final FontWeight? fontWeight;
-  final double? size;
-  final Color? fColor;
+
+  final DataModel s;
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      value,
-      style: GoogleFonts.lato(
-        fontWeight: fontWeight ?? FontWeight.normal,
-        fontSize: size ?? 16.0,
-        color: fColor ?? AppPaints.WHITE_70,
+    return Dismissible(
+      key: Key(
+        s.dateTimeStamp!.toString(),
+      ),
+      direction: DismissDirection.horizontal,
+      secondaryBackground: Container(),
+      background: const Icon(
+        CupertinoIcons.delete,
+        color: AppPaints.RED_300,
+      ),
+      onDismissed: (direction) {
+        context.read<BmiCalculationCubit>().deleteDBase(
+              s.dateTimeStamp!,
+            );
+
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: TilesText(
+              value:
+                  "BMI ${s.resultBMI!.toStringAsFixed(1)} is deleted successfully",
+            ),
+          ),
+        ));
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 6),
+        child: ExpansionTilesBodyHistoyViewBMI(
+          s: s,
+        ),
+      ),
+    );
+  }
+}
+
+class ExpansionTilesBodyHistoyViewBMI extends StatelessWidget {
+  const ExpansionTilesBodyHistoyViewBMI({super.key, required this.s});
+  final DataModel s;
+  @override
+  Widget build(BuildContext context) {
+    return ExpansionTile(
+      expandedAlignment: Alignment.topLeft,
+      collapsedIconColor: AppPaints.WHITE_70,
+      // collapsedTextColor: AppPaints.BLACK_900,
+      childrenPadding: const EdgeInsets.only(left: 15, bottom: 4),
+      collapsedShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+
+      collapsedBackgroundColor: ResultEffectsBMI.getColorBMI(s.resultBMI!),
+      iconColor: AppPaints.WHITE_70,
+
+      backgroundColor: AppPaints.GREY_900,
+      // expansionAnimationStyle: AnimationStyle(),
+      // clipBehavior: Clip.hardEdge,
+      title: DispResultEntriesBMI(
+        title: "BMI RESULT",
+        value: s.resultBMI!.toStringAsFixed(1),
+        sizeT: 16,
+        sizeV: 16,
+        colorV: AppPaints.WHITE_70,
+      ),
+      // expanded views
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 10, bottom: 4),
+          child: Column(
+            children: [
+              TilesText(
+                value: ResultEffectsBMI.getLabeledBMI(
+                  s.resultBMI!,
+                ),
+                size: 14,
+                fColor: ResultEffectsBMI.getColorBMI(
+                  s.resultBMI!,
+                ),
+                fontWeight: FontWeight.w600,
+              ),
+              const CustomDivider(),
+              DispResultEntriesBMI(
+                title: 'Gender :',
+                value: s.gender ?? 'F',
+                sizeT: 14,
+                sizeV: 14,
+              ),
+              DispResultEntriesBMI(
+                title: 'Weight :',
+                value: s.weight.toString() ?? '70',
+                sizeT: 14,
+                sizeV: 14,
+              ),
+              DispResultEntriesBMI(
+                title: 'Height :',
+                value: s.sliderHt.toString() ?? '150',
+                sizeT: 14,
+                sizeV: 14,
+              ),
+              DispResultEntriesBMI(
+                title: 'Age :',
+                value: s.age.toString() ?? '20',
+                sizeT: 14,
+                sizeV: 14,
+              ),
+              DispResultEntriesBMI(
+                title: 'DateTime :',
+                value:
+                    DateTimeFormater.toDateTime(s.dateTimeStamp!).toString() ??
+                        '20',
+                sizeT: 14,
+                sizeV: 14,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class HeaderHistoryBMI extends StatelessWidget {
+  const HeaderHistoryBMI({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      decoration: BoxDecoration(
+        color: AppPaints.GREY_900,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: const TilesText(
+        value: 'Users can see how their weight and BMI have changed over time.',
+        fontWeight: FontWeight.w600,
       ),
     );
   }
