@@ -1,13 +1,13 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
-import 'package:bmi_calculator/cubit/bmi_calculation_cubit.dart';
+import 'package:bmi_calculator/cubit/save-cubit/bmi_calculation_cubit.dart';
 import 'package:bmi_calculator/data/model/data_model.dart';
 import 'package:bmi_calculator/settings/route/routes_name.dart';
-import 'package:bmi_calculator/utils/extensions.dart';
+import 'package:bmi_calculator/utils/extensions/size_extension.dart';
 import 'package:bmi_calculator/utils/widgets/app_title.dart';
 import 'package:bmi_calculator/utils/widgets/calculate_buttom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../cubit/inc-dec-cubit/temp_cubit_bmi.dart';
+import '../../cubit/temp-cubit/temp_cubit_bmi.dart';
 import 'parts/gender_selector.dart';
 import 'parts/height_slider.dart';
 import 'parts/weight_and_age_selectors.dart';

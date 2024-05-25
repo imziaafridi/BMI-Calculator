@@ -1,6 +1,3 @@
-import 'package:bmi_calculator/const/app_paints.dart';
-import 'package:bmi_calculator/pages/bmi_result/parts/custom_divider.dart';
-import 'package:bmi_calculator/utils/extensions.dart';
 import 'package:bmi_calculator/utils/widgets/body_text.dart';
 import 'package:flutter/material.dart';
 
@@ -49,15 +46,6 @@ class DispResultEntriesBMI extends StatelessWidget {
           fontWeight: fontWhtT,
           size: sizeT,
         ),
-        // 5.pw,
-        // const SizedBox(
-        //   width: 100,
-        //   child: CustomDivider(
-        //     thickness: .2,
-        //     color: AppPaints.RED_DARK,
-        //   ),
-        // ),
-        // 5.pw,
         BodyText(
           text: value,
           color: colorV ?? const Color.fromARGB(233, 255, 255, 255),

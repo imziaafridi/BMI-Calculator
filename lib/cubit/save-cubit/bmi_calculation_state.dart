@@ -1,4 +1,5 @@
-part of 'bmi_calculation_cubit.dart';
+import 'package:bmi_calculator/data/model/data_model.dart';
+import 'package:equatable/equatable.dart';
 
 class BmiCalculationState extends Equatable {
   const BmiCalculationState({

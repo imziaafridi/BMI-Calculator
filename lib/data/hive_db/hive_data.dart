@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:bmi_calculator/data/model/data_model.dart';
+import 'package:bmi_calculator/data/data_exports.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
